@@ -8,6 +8,8 @@ import bs4 as bs
 import urllib.request
 import re
 
+
+'''
 raw_html = urllib.request.urlopen('https://en.wikipedia.org/wiki/Natural_language_processing')
 raw_html = raw_html.read()
 
@@ -29,7 +31,20 @@ for i in range(len(corpus )):
 
 #print(len(corpus))
 #print(corpus[0])
+'''
+import os
+corpus = []
 
+#directory of folder where article files stored
+directory = "../articles_processed"
+for filename in os.listdir(directory):
+    try:
+        article_content = open(os.path.join(directory, filename), 'r').read()
+        corpus.append(article_content)
+    except:
+        print("Exception in file:", filename)
+
+print(len(corpus))
 wordfreq = {}
 for sentence in corpus:
     tokens = nltk.word_tokenize(sentence)
@@ -39,17 +54,18 @@ for sentence in corpus:
         else:
             wordfreq[token] += 1
 
-most_freq = heapq.nlargest(200, wordfreq, key=wordfreq.get)
+most_freq = heapq.nlargest(2000, wordfreq, key=wordfreq.get)
 sentence_vectors = []
 for sentence in corpus:
     sentence_tokens = nltk.word_tokenize(sentence)
-    sent_vec = []
-    for token in most_freq:
-        if token in sentence_tokens:
-            sent_vec.append(1)
-        else:
-            sent_vec.append(0)
-    sentence_vectors.append(sent_vec)
+    if len(sentence_tokens) > 20:
+        sent_vec = []
+        for token in most_freq:
+            if token in sentence_tokens:
+                sent_vec.append(1)
+            else:
+                sent_vec.append(0)
+        sentence_vectors.append(sent_vec)
 
 sentence_vectors = np.asarray(sentence_vectors)
 
