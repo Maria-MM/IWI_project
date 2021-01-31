@@ -4,10 +4,9 @@ from sklearn import datasets
 from sklearn.decomposition import PCA
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import utils
+import pca
 
 
-#code for testing PCA on Another dataset
 plt.style.use('ggplot')
 # Load the data
 iris = datasets.load_iris()
@@ -18,13 +17,12 @@ scaler = StandardScaler()
 scaler.fit(X)
 X = scaler.transform(X)
 # The PCA model
-standard_pca = PCA(n_components=2) # estimate only 2 PCs
-X_new = standard_pca.fit_transform(X) # project the original data into the PCA space
+standard_pca = PCA(n_components=2)
+X_new = standard_pca.fit_transform(X)
 
 
-
-mypca = utils.MyPCA(2)
-X_new2 = mypca.project_data(X)
+my_pca = pca.MyPCA(2)
+X_new2 = my_pca.project_data(X)
 
 print("Is shape of both projections equal:",X_new.shape == X_new2.shape)
 print(np.concatenate((X_new, X_new2), axis = 1)[:5])

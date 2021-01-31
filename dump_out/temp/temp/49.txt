@@ -1,0 +1,1 @@
+skyo own oper system product skyo posix compliant come core open sourc gnu tool includ gcc due level posix complianc port gtk widget toolkit mani linux other unix applic have been port includ abiword gaim few game such quak made robert szelenei
